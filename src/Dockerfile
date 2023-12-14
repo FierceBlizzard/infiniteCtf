@@ -1,5 +1,12 @@
 FROM php:apache
-COPY index.php /var/www/html
+
+# Copy the PHP file to the web server directory
+COPY * /var/www/html/
+
+# Set the working directory to the web server directory
+WORKDIR /var/www/html
+
+# Expose port 80 for Apache
 EXPOSE 80
-RUN echo "ServerName $(hostname -I | cut -d' ' -f1)" >> /etc/apache2/apache2.conf
-CMD echo "PHP website is accessible at: http://$(hostname -I | cut -d' ' -f1):80" && apache2-foreground
+
+CMD ["apache2-foreground"]
